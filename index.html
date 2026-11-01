@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <style>
+      .bg-video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+  object-fit: cover;
+}
+ </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para o Meu Amor ❤️ - Edição Luan Santana</title>
@@ -95,16 +106,15 @@
 <body 
 
 <video autoplay loop muted playsinline class="bg-video">
-  <source src="video.mp4" type="video/mp4">
-
+  <source src="Luan Santana.mp4" type="video/mp4">
 </video>
-
-class="font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-romanticRed selection:text-white">
+<div class="font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-romanticRed selection:text-white">
 
     <!-- Floating Background Canvas for Floating Hearts -->
     <canvas id="heartCanvas"></canvas>
 
     <!-- MAIN CONTAINER -->
+   
     <div class="relative z-10 min-h-screen flex flex-col">
 
         <!-- ================= TELA DE LOGIN ================= -->
@@ -463,5 +473,7 @@ class="font-sans antialiased min-h-screen flex flex-col justify-between selectio
             animateCanvas();
         };
     </script>
+ </div>
+</div>
 </body>
 </html>
