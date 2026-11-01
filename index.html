@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para o Meu Amor ❤️ - Edição Luan Santana</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    },
+                    colors: {
+                        spotify: '#1DB954',
+                        spotifyDark: '#121212',
+                        spotifyLight: '#181818',
+                        romanticRed: '#ff3366',
+                        romanticPurple: '#7000ff',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Glowing & Particle Animations */
+        body {
+            background-color: #0b0b10;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(135deg, #ff3366, #7000ff, #1DB954);
+            background-size: 200% 200%;
+            animation: gradientShift 6s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .bg-glass {
+            background: rgba(24, 24, 32, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .bg-glass-card {
+            background: rgba(30, 30, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Floating Hearts Canvas */
+        #heartCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0b10;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #282838;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff3366;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-romanticRed selection:text-white">
+
+    <!-- Floating Background Canvas for Floating Hearts -->
+    <canvas id="heartCanvas"></canvas>
+
+    <!-- MAIN CONTAINER -->
+    <div class="relative z-10 min-h-screen flex flex-col">
+
+        <!-- ================= TELA DE LOGIN ================= -->
+        <div id="loginScreen" class="flex-grow flex items-center justify-center p-4 transition-all duration-500">
+            <div class="w-full max-w-md bg-glass p-8 md:p-10 rounded-3xl shadow-2xl relative overflow-hidden text-center border border-white/10">
+                
+                <!-- Decorative Top Glow -->
+                <div class="absolute -top-20 -left-20 w-40 h-40 bg-romanticRed/30 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-20 -right-20 w-40 h-40 bg-romanticPurple/30 rounded-full blur-3xl"></div>
+
+                <!-- Heart Icon Header -->
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-tr from-romanticRed to-romanticPurple text-white text-2xl shadow-lg mb-6 transform hover:scale-110 transition duration-300">
+                    <i class="fa-solid font-heart fa-heart animate-pulse"></i>
+                </div>
+
+                <h1 class="font-serif text-3xl md:text-4xl font-bold mb-2 text-white">Espaço Nosso</h1>
+                <p class="text-gray-300 text-sm mb-8">Digite suas credenciais carinhosas para acessar o seu player especial do Luan & Spotify ❤️</p>
+
+                <!-- Form -->
+                <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-5 text-left">
+                    <div>
+                        <label class="block text-xs uppercase tracking-widest text-gray-400 font-semibold mb-2">Seu Nome / Usuário</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+                            <input type="text" id="username" required placeholder="Ex: Meu Amor" 
+                                class="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-romanticRed focus:ring-1 focus:ring-romanticRed text-white placeholder-gray-500 transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs uppercase tracking-widest text-gray-400 font-semibold mb-2">Sua Senha Secreta</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+                            <input type="password" id="password" required placeholder="••••••••" 
+                                class="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-romanticRed focus:ring-1 focus:ring-romanticRed text-white placeholder-gray-500 transition">
+                        </div>
+                    </div>
+
+                    <!-- Notification Feedback -->
+                    <div id="loginError" class="hidden p-3 rounded-xl bg-red-500/20 border border-red-500/50 text-red-200 text-xs text-center">
+                        Ops! Usuário ou senha incorretos. Tente novamente!
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 px-6 rounded-xl font-bold text-white gradient-border hover:opacity-95 transform hover:-translate-y-0.5 transition shadow-lg flex items-center justify-center gap-2 group">
+                        <span>Entrar no Nosso Mundo</span>
+                        <i class="fa-solid fa-arrow-right text-sm group-hover:translate-x-1 transition"></i>
+                    </button>
+                </form>
+
+                <p class="text-xs text-gray-500 mt-6">Dica: Qualquer usuário e senha vão te dar acesso! 🥰</p>
+            </div>
+        </div>
+
+        <!-- ================= ÁREA PRINCIPAL (PÓS-LOGIN) ================= -->
+        <div id="mainContent" class="hidden flex-grow flex flex-col max-w-6xl w-full mx-auto px-4 py-6 md:py-10 space-y-8">
+            
+            <!-- CAPA DE PERFIL / BANNER LUAN SANTANA -->
+            <div class="relative w-full rounded-3xl overflow-hidden shadow-2xl bg-glass border border-white/10">
+                <!-- Background Image & Gradient Layer -->
+                <div class="absolute inset-0 z-0">
+                    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1600&auto=format&fit=crop" 
+                         alt="Luan Santana Banner" 
+                         class="w-full h-full object-cover object-center filter opacity-40 brightness-75 scale-105 hover:scale-100 transition duration-1000">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0b0b10] via-[#0b0b10]/60 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-[#0b0b10] via-transparent to-transparent"></div>
+                </div>
+
+                <!-- Profile Content -->
+                <div class="relative z-10 p-6 md:p-10 flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-8 pt-20 md:pt-32">
+                    
+                    <!-- Avatar Luan Santana -->
+                    <div class="relative group">
+                        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full p-1 gradient-border shadow-2xl overflow-hidden flex-shrink-0">
+                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600&auto=format&fit=crop" 
+                                 alt="Luan Santana Profile" 
+                                 class="w-full h-full object-cover rounded-full group-hover:scale-110 transition duration-500">
+                        </div>
+                        <span class="absolute bottom-2 right-2 bg-spotify text-black p-2 rounded-full text-xs shadow-lg" title="Artista Verificado">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                    </div>
+
+                    <!-- Text Profile Details -->
+                    <div class="flex-grow text-center md:text-left">
+                        <div class="flex items-center justify-center md:justify-start gap-2 text-xs uppercase tracking-widest text-spotify font-bold mb-1">
+                            <i class="fa-solid fa-circle-check"></i> Perfil Especial de Luan Santana
+                        </div>
+                        <h2 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight font-serif mb-2">
+                            Luan Santana <span class="text-sm font-sans font-normal text-pink-400 bg-pink-500/20 px-3 py-1 rounded-full border border-pink-500/30">O Favorito Dela</span>
+                        </h2>
+                        <p class="text-gray-300 text-sm md:text-base max-w-xl">
+                            "Meteoro", "Morena", "DEJA VU" e todos os sucessos que embalam a nossa história de amor. Pesquise e curta suas músicas no Spotify!
+                        </p>
+
+                        <!-- User Welcome Greetings -->
+                        <div class="mt-4 inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-xs md:text-sm text-pink-200">
+                            <i class="fa-solid fa-sparkles text-yellow-400"></i>
+                            <span>Bem-vinda de volta, <strong id="displayName" class="text-white">Meu Amor</strong>! ❤️</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Play All Badge -->
+                    <div class="flex-shrink-0">
+                        <button onclick="searchSpotify('Luan Santana')" 
+                                class="flex items-center gap-3 bg-spotify hover:bg-emerald-400 text-black font-bold px-6 py-3.5 rounded-full shadow-lg hover:scale-105 transition">
+                            <i class="fa-solid fa-play text-lg"></i>
+                            <span>Ouvir Luan no Spotify</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEARCH BAR SECTION -->
+            <div class="bg-glass p-6 md:p-8 rounded-3xl border border-white/10 shadow-xl relative overflow-hidden">
+                <div class="max-w-2xl mx-auto text-center space-y-4">
+                    <h3 class="text-2xl font-bold text-white font-serif">O que você quer ouvir agora? 🎧</h3>
+                    <p class="text-gray-400 text-sm">Digite a música ou o artista desejado para ir direto para o Spotify.</p>
+                    
+                    <form onsubmit="handleSearch(event)" class="relative flex items-center mt-4">
+                        <div class="relative w-full">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-5 text-gray-400 text-lg">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                            <input type="text" id="searchInput" placeholder="Ex: Luan Santana - Meio Termo..." 
+                                   class="w-full pl-14 pr-36 py-4 bg-white/10 border border-white/20 rounded-2xl focus:outline-none focus:border-spotify focus:ring-2 focus:ring-spotify/50 text-white placeholder-gray-400 text-base md:text-lg transition shadow-inner">
+                        </div>
+                        <button type="submit" 
+                                class="absolute right-2 px-6 py-3 bg-spotify hover:bg-emerald-400 text-black font-bold rounded-xl text-sm md:text-base flex items-center gap-2 shadow-md transition">
+                            <span>Pesquisar</span>
+                            <i class="fa-brands fa-spotify text-lg"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- QUICK LUAN SANTANA HITS (QUICK LAUNCHER) -->
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-white font-serif flex items-center gap-2">
+                        <i class="fa-solid fa-fire text-romanticRed"></i>
+                        <span>Sucessos Inesquecíveis do Luan</span>
+                    </h3>
+                    <span class="text-xs text-gray-400">Clique para abrir no Spotify</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Hit Card 1 -->
+                    <div onclick="searchSpotify('Luan Santana Morena')" 
+                         class="bg-glass-card p-4 rounded-2xl border border-white/5 hover:border-romanticRed/50 hover:bg-white/10 transition duration-300 cursor-pointer group flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-white text-xl shadow-md group-hover:scale-110 transition">
+                            <i class="fa-solid fa-music"></i>
+                        </div>
+                        <div class="flex-grow overflow-hidden">
+                            <h4 class="font-bold text-white truncate group-hover:text-romanticRed transition">Morena</h4>
+                            <p class="text-xs text-gray-400 truncate">Luan Santana</p>
+                        </div>
+                        <div class="text-gray-500 group-hover:text-spotify text-xl transition">
+                            <i class="fa-brands fa-spotify"></i>
+                        </div>
+                    </div>
+
+                    <!-- Hit Card 2 -->
+                    <div onclick="searchSpotify('Luan Santana Meio Termo')" 
+                         class="bg-glass-card p-4 rounded-2xl border border-white/5 hover:border-romanticRed/50 hover:bg-white/10 transition duration-300 cursor-pointer group flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center text-white text-xl shadow-md group-hover:scale-110 transition">
+                            <i class="fa-solid fa-heart text-white"></i>
+                        </div>
+                        <div class="flex-grow overflow-hidden">
+                            <h4 class="font-bold text-white truncate group-hover:text-romanticRed transition">Meio Termo</h4>
+                            <p class="text-xs text-gray-400 truncate">Luan Santana</p>
+                        </div>
+                        <div class="text-gray-500 group-hover:text-spotify text-xl transition">
+                            <i class="fa-brands fa-spotify"></i>
+                        </div>
+                    </div>
+
+                    <!-- Hit Card 3 -->
+                    <div onclick="searchSpotify('Luan Santana Meteoro')" 
+                         class="bg-glass-card p-4 rounded-2xl border border-white/5 hover:border-romanticRed/50 hover:bg-white/10 transition duration-300 cursor-pointer group flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center text-white text-xl shadow-md group-hover:scale-110 transition">
+                            <i class="fa-solid fa-meteor"></i>
+                        </div>
+                        <div class="flex-grow overflow-hidden">
+                            <h4 class="font-bold text-white truncate group-hover:text-romanticRed transition">Meteoro</h4>
+                            <p class="text-xs text-gray-400 truncate">Luan Santana</p>
+                        </div>
+                        <div class="text-gray-500 group-hover:text-spotify text-xl transition">
+                            <i class="fa-brands fa-spotify"></i>
+                        </div>
+                    </div>
+
+                    <!-- Hit Card 4 -->
+                    <div onclick="searchSpotify('Luan Santana DEJA VU')" 
+                         class="bg-glass-card p-4 rounded-2xl border border-white/5 hover:border-romanticRed/50 hover:bg-white/10 transition duration-300 cursor-pointer group flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white text-xl shadow-md group-hover:scale-110 transition">
+                            <i class="fa-solid fa-compact-disc"></i>
+                        </div>
+                        <div class="flex-grow overflow-hidden">
+                            <h4 class="font-bold text-white truncate group-hover:text-romanticRed transition">DEJA VU</h4>
+                            <p class="text-xs text-gray-400 truncate">Luan Santana & Ana Castela</p>
+                        </div>
+                        <div class="text-gray-500 group-hover:text-spotify text-xl transition">
+                            <i class="fa-brands fa-spotify"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROMANTIC DEDICATION BANNER -->
+            <div class="bg-gradient-to-r from-romanticRed/20 via-purple-900/30 to-spotify/20 p-6 md:p-8 rounded-3xl border border-pink-500/20 text-center space-y-3">
+                <i class="fa-solid fa-quote-left text-3xl text-pink-400 opacity-50"></i>
+                <p class="font-serif italic text-lg md:text-xl text-pink-100 max-w-3xl mx-auto">
+                    "Te amar me faz querer ser melhor a cada segundo. Todas as músicas românticas do mundo me lembram você!"
+                </p>
+                <div class="text-xs text-pink-300 font-semibold uppercase tracking-widest pt-2">
+                    Feito com todo o carinho do mundo para você ❤️
+                </div>
+            </div>
+            
+            <!-- LOGOUT BUTTON -->
+            <div class="text-center pt-4">
+                <button onclick="logout()" class="text-xs text-gray-500 hover:text-gray-300 underline transition">
+                    Sair do aplicativo
+                </button>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="relative z-10 py-4 text-center text-xs text-gray-500 border-t border-white/5">
+            <p>Criado com amor &bull; Conectado diretamente ao <i class="fa-brands fa-spotify text-spotify"></i> Spotify</p>
+        </footer>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Handle Login Submission
+        function handleLogin(e) {
+            e.preventDefault();
+            const usernameInput = document.getElementById('username').value.trim();
+            const passwordInput = document.getElementById('password').value.trim();
+
+            if (usernameInput !== "" && passwordInput !== "") {
+                // Update Name on interface
+                document.getElementById('displayName').innerText = usernameInput;
+
+                // Animate Transition
+                const loginScreen = document.getElementById('loginScreen');
+                const mainContent = document.getElementById('mainContent');
+
+                loginScreen.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    loginScreen.classList.add('hidden');
+                    mainContent.classList.remove('hidden');
+                    mainContent.classList.add('animate-fade-in');
+                }, 400);
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        }
+
+        // Handle Logout
+        function logout() {
+            const loginScreen = document.getElementById('loginScreen');
+            const mainContent = document.getElementById('mainContent');
+
+            mainContent.classList.add('hidden');
+            loginScreen.classList.remove('hidden', 'opacity-0', 'scale-95');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        // Redirect Search to Spotify Official
+        function searchSpotify(query) {
+            if (!query) return;
+            const encodedQuery = encodeURIComponent(query);
+            const spotifyUrl = `https://open.spotify.com/search/${encodedQuery}`;
+            window.open(spotifyUrl, '_blank');
+        }
+
+        // Handle Custom Search Input
+        function handleSearch(e) {
+            e.preventDefault();
+            const query = document.getElementById('searchInput').value.trim();
+            if (query !== "") {
+                searchSpotify(query);
+            }
+        }
+
+        // Background Particles Effect (Floating Hearts & Glows)
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        class FloatingHeart {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = height + Math.random() * 100;
+                this.size = Math.random() * 12 + 6;
+                this.speedY = Math.random() * 1 + 0.5;
+                this.speedX = Math.sin(Math.random() * Math.PI) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.color = Math.random() > 0.5 ? '#ff3366' : '#7000ff';
+            }
+
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+
+                if (this.y < -20) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                const d = this.size;
+                // Draw Heart Shape
+                ctx.moveTo(this.x, this.y);
+                ctx.bezierCurveTo(this.x - d / 2, this.y - d / 2, this.x - d, this.y + d / 3, this.x, this.y + d);
+                ctx.bezierCurveTo(this.x + d, this.y + d / 3, this.x + d / 2, this.y - d / 2, this.x, this.y);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        const hearts = Array.from({ length: 25 }, () => new FloatingHeart());
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            hearts.forEach(heart => {
+                heart.update();
+                heart.draw();
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+
+        window.onload = function() {
+            animateCanvas();
+        };
+    </script>
+</body>
+</html>
