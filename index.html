@@ -506,14 +506,7 @@
 
             const hearts = Array.from({ length: 25 }, () => new FloatingHeart());
 
-            function animateCanvas() {
-                ctx.clearRect(0, 0, width, height);
-                hearts.forEach(heart => {
-                    heart.update();
-                    heart.draw();
-                });
-                requestAnimationFrame(animateCanvas);
-            }
+        
 
            
             
